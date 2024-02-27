@@ -1,5 +1,6 @@
 #include "okreslenie_polozenia.h"
 
+
 void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
 	
 	int licznik_c=0;
@@ -24,4 +25,16 @@ void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *
 	parametry_labiryntu->c=licznik_c;
 	free(linia);
 	
+}
+
+void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
+	rewind(plik);
+
+	FILE *temp = fopen("tmp/temp.txt", "w");
+	char znak;
+	while((znak=fgetc(plik)) != EOF)
+	{
+		fprintf(temp, "%c", znak);
+	}
+	fclose(temp);
 }

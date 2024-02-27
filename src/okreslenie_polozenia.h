@@ -9,5 +9,5 @@ struct ParametryLabiryntu_typ{
 };
 
 void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu);
-
+void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu);
 #endif
