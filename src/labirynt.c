@@ -1,7 +1,25 @@
 #include "labirynt.h"
 #include "analiza_labiryntu.h"
 
-
+void scharakteryzowanie_znacznika(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
+	znacznik->x=punkt_startowy->x;
+	znacznik->y=punkt_startowy->y;
+	
+	if(znacznik->x==0 && znacznik->y!=0 && znacznik->y!=((parametry_labiryntu->r)-1)){
+		znacznik->kierunek='p';
+	} else if(znacznik->x==((parametry_labiryntu->c)-1) && znacznik->y!=0 && znacznik->y!=((parametry_labiryntu->r)-1)){
+		znacznik->kierunek='l';
+	} else if(znacznik->y==0 && znacznik->x!=0 && znacznik->x!=((parametry_labiryntu->c)-1)){
+		znacznik->kierunek='d';
+	} else if(znacznik->y==((parametry_labiryntu->r)-1) && znacznik->x!=0 && znacznik->x!=((parametry_labiryntu->c)-1)){
+		znacznik->kierunek='g';
+	} else{
+		fprintf(stdout, "BLAD: Labirynt blednie skonstruowany (poczatek labiryntu znajduje sie w niepoprawnym miejscu)\n");
+	}
+		
+	
+	
+}
 
 int main(int argc, char* argv[]){
 	if(argc!=2){
@@ -36,8 +54,15 @@ int main(int argc, char* argv[]){
 	
 	fprintf(stdout, "Poczatek labiryntu znajduje sie w punkcie P(%d,%d)\nKoniec labiryntu znajduje sie w punkcie K(%d,%d)\n",punkt_startowy->x,punkt_startowy->y,punkt_koncowy->x,punkt_koncowy->y);
 	
+	struct Znacznik_typ* znacznik=malloc(sizeof(struct Znacznik_typ));
+	
+	scharakteryzowanie_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
+	
+	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
+	
 	
 	
 	return 0;
 	
 }
+
