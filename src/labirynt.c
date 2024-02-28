@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "okreslenie_polozenia.h"
+#include "rozwiazywanie_labiryntu.h"
+
 int main(int argc, char* argv[]){
 	if(argc!=2){
 		fprintf(stdout,"BLAD: Podano bledna liczbe argumentow!\n");
@@ -23,6 +25,8 @@ int main(int argc, char* argv[]){
 	fprintf(stdout, "Liczba wierszy labiryntu: %d\nLiczba kolumn labiryntu: %d\n", parametry_labiryntu->r, parametry_labiryntu->c);
 	utworzenie_pliku_pomocniczego(wczytany_labirynt, parametry_labiryntu);
 	
+	rozwiazywanie_labiryntu(parametry_labiryntu);
+
 	free(sciezka_do_pliku);
 	fclose(wczytany_labirynt);
 	return 0;
