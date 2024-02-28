@@ -1,4 +1,4 @@
-#include "okreslenie_polozenia.h"
+#include "analiza_labiryntu.h"
 
 
 void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
@@ -26,6 +26,34 @@ void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *
 	free(linia);
 	
 }
+
+void okreslenie_poczatek_koniec_labiryntu(struct Punkt_typ* punkt_startowy, struct Punkt_typ* punkt_koncowy){
+	FILE* plik=fopen("tmp/temp.txt", "r");
+	
+	char sprawdzany_znak=fgetc(plik);
+	int aktualny_x=0;
+	int aktualny_y=0;
+	while(sprawdzany_znak!=EOF){
+		if(sprawdzany_znak=='P'){
+			punkt_startowy->x=aktualny_x;
+			punkt_startowy->y=aktualny_y;
+		}
+		else if(sprawdzany_znak=='K'){
+			punkt_koncowy->x=aktualny_x;
+			punkt_koncowy->y=aktualny_y;
+		}
+		if(sprawdzany_znak=='\n'){
+			aktualny_x=0;
+			aktualny_y++;
+		}else{
+			aktualny_x++;
+		}
+		
+		sprawdzany_znak=fgetc(plik);
+	}
+	fclose(plik);
+}
+
 
 void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
 	rewind(plik);
