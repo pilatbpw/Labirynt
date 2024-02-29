@@ -1,5 +1,6 @@
 #include "labirynt.h"
 #include "analiza_labiryntu.h"
+#include "odczyt_labiryntu.h"
 
 void scharakteryzowanie_znacznika(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
 	znacznik->x=punkt_startowy->x;
@@ -60,6 +61,7 @@ int main(int argc, char* argv[]){
 	
 	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
 	
+	fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
 	
 	
 	return 0;
