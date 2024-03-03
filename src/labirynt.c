@@ -1,8 +1,9 @@
 #include "labirynt.h"
 #include "analiza_labiryntu.h"
 #include "odczyt_labiryntu.h"
-
-void scharakteryzowanie_znacznika(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
+#include "poruszanie_znacznika.h"
+#include "zapis_trasy.h"
+void charakterystyka_poczatkowa_znacznika(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
 	znacznik->x=punkt_startowy->x;
 	znacznik->y=punkt_startowy->y;
 	
@@ -57,13 +58,20 @@ int main(int argc, char* argv[]){
 	
 	struct Znacznik_typ* znacznik=malloc(sizeof(struct Znacznik_typ));
 	
-	scharakteryzowanie_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
+	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	
 	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
 	
-	fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
+	fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
 	
-	
+	while(poruszanie_po_labiryncie(znacznik, parametry_labiryntu)){
+		fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
+		
+		fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
+		fprintf(stdout, "\n");
+		
+	}
+	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu);
 	return 0;
 	
 }
