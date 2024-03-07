@@ -8,5 +8,8 @@
 void zmiana_kierunku_znacznika(char skret, struct Znacznik_typ* znacznik);
 void ruch_do_przodu(struct Znacznik_typ* znacznik);
 int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu);
+int ile_przejsc(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu);
+void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu);
+void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu);
 
 #endif

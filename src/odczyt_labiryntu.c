@@ -38,5 +38,13 @@ char okreslenie_bloku_przed_znacznikiem(struct Znacznik_typ* znacznik, struct Pa
 	
 }
 
+char okreslenie_aktualnego_bloku(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu){
+	FILE* labirynt = fopen("tmp/temp.txt", "r");
+	char znak;
+	fseek(labirynt, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
+	znak = fgetc(labirynt);
+	fclose(labirynt);
+	return znak;
+}
 
 	
