@@ -45,7 +45,8 @@ int main(int argc, char* argv[]){
 	fprintf(stdout, "Liczba wierszy labiryntu: %d\nLiczba kolumn labiryntu: %d\n", parametry_labiryntu->r, parametry_labiryntu->c);
 	
 	
-	utworzenie_pliku_pomocniczego(wczytany_labirynt, parametry_labiryntu);
+	utworzenie_pliku_pomocniczego(wczytany_labirynt);
+	//utworzenie_pliku_wynikowego(wczytany_labirynt);
 	free(sciezka_do_pliku);
 	fclose(wczytany_labirynt);
 	

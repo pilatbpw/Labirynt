@@ -55,10 +55,10 @@ void okreslenie_poczatek_koniec_labiryntu(struct Punkt_typ* punkt_startowy, stru
 }
 
 
-void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
+void utworzenie_pliku_pomocniczego(FILE *plik){
 	rewind(plik);
 
-	FILE *temp = fopen("tmp/temp.txt", "w");
+	FILE *temp = fopen("tmp/temp.txt", "w+");
 	char znak;
 	while((znak=fgetc(plik)) != EOF)
 	{
@@ -66,3 +66,16 @@ void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *pa
 	}
 	fclose(temp);
 }
+/*
+void utworzenie_pliku_wynikowego(FILE *plik){
+	rewind(plik);
+
+	FILE *temp = fopen("wyniki/sciezka_rozwiazujaca_labirynt.txt", "w+");
+	char znak;
+	while((znak=fgetc(plik)) != EOF)
+	{
+		fprintf(temp, "%c", znak);
+	}
+	fclose(temp);
+}
+*/

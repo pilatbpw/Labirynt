@@ -14,6 +14,7 @@ struct Punkt_typ{
 };
 
 void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu);
-void utworzenie_pliku_pomocniczego(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu);
+void utworzenie_pliku_pomocniczego(FILE *plik);
+void utworzenie_pliku_wynikowego(FILE *plik);
 void okreslenie_poczatek_koniec_labiryntu(struct Punkt_typ* punkt_startowy, struct Punkt_typ* punkt_koncowy);
 #endif

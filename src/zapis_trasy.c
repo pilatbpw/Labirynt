@@ -54,7 +54,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 	while(okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) != 'K')
 	{
 		j=0;
-		while(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'O')
+		while(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'O' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'K')
 		{
 			j++;
 			ruch_do_przodu(znacznik);
@@ -157,6 +157,8 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 			break;
 		}
 		fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
+		
+		
 		fputc('O', maze);
 		switch(znak)
 		{
