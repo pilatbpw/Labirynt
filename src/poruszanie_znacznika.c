@@ -131,7 +131,7 @@ void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* pa
     {
         zmiana_kierunku_znacznika('p', znacznik);
         znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-        while(znak2 == 'X' || znak2 == 'P')
+        while(znak2 == 'X' || znak2 == 'P' || znak2=='K')
         {
             zmiana_kierunku_znacznika('l', znacznik);
             znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
