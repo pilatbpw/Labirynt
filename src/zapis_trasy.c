@@ -2,7 +2,7 @@
 
 void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
 	wyznaczenie_trasy(znacznik, punkt_startowy, parametry_labiryntu);
-	FILE* plik=fopen("tmp/zapis_przejsc.txt", "w");
+	FILE* plik=fopen("wyniki/zapis_przejsc.txt", "w");
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	/*
 	while(ostateczna_trasa(znacznik, parametry_labiryntu)){
@@ -133,15 +133,17 @@ int ostateczna_trasa(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_ty
 			break;
 		}
 	}
-	printf("3");
+	printf("3"); // CO TO TU ROBI?
 	return 0;
 }
 void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	FILE* maze = fopen("tmp/temp.txt", "r+");
+	FILE* plik_wynikowy = fopen("wyniki/sciezka_rozwiazujaca_labirynt.txt", "r+");
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
 	char znak2;
+	
 	while(znak != 'K')
 	{
 		znak2=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
@@ -157,8 +159,9 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 			break;
 		}
 		fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
+		fseek(plik_wynikowy, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
 		
-		
+		fputc('O', plik_wynikowy);
 		fputc('O', maze);
 		switch(znak)
 		{
@@ -181,4 +184,5 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 		}
 	}
 	fclose(maze);
+	fclose(plik_wynikowy);
 }
