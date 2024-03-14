@@ -110,7 +110,7 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 		case 'L':
 		case 'R':
 		case 'U':
-		case 'D':
+		case 'D':     
 			ruch_do_przodu(znacznik);
 			break;
 		case 'K': //TEN CASE OZNACZA ZE MOZE NIE BYC WCALE POTRZEBNE ZAPISYWANIE ZMIENNEJ "punkt_koncowy" znajdujacej sie w analiza_labiryntu.c ROZWAZ TO!!!
@@ -127,23 +127,24 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 }
 void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
-	FILE* maze = fopen("tmp/temp.txt", "r+");
-	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
-	char znak2;
-	while(znak != 'L' && znak != 'R' && znak != 'U' && znak != 'D')
-	{
-		znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		while(znak2 == 'X' || znak2 == 'P')
-		{
-			zmiana_kierunku_znacznika('l', znacznik);
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		}
-		fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-		fputc('X', maze);
-		ruch_do_przodu(znacznik);
-		znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
-	}
-	fclose(maze);
+    FILE* maze = fopen("tmp/temp.txt", "r+");
+    
+    char znak2;
+    while(ile_przejsc(znacznik, parametry_labiryntu)==1 || ile_przejsc(znacznik, parametry_labiryntu) ==2)
+    {
+        zmiana_kierunku_znacznika('p', znacznik);
+        znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+        while(znak2 == 'X' || znak2 == 'P')
+        {
+            zmiana_kierunku_znacznika('l', znacznik);
+            znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+        }
+        fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
+        fputc('X', maze);
+        ruch_do_przodu(znacznik);
+        
+    }
+    fclose(maze);
 }
 void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
@@ -153,6 +154,8 @@ void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* 
 	switch(znak){
 		case ' ':
 			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+			
+			zmiana_kierunku_znacznika('p', znacznik);
 			while(znak2 == 'X' || znak2 == 'P')
 			{
 				zmiana_kierunku_znacznika('l', znacznik);
