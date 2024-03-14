@@ -76,15 +76,12 @@ void ruch_do_przodu(struct Znacznik_typ* znacznik){
 
 int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu){
 	char znak;
-	if(ile_przejsc(znacznik, parametry_labiryntu) > 2 || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'U' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'D' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'L' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'R') 
-	{	
-		skrzyzowanie(znacznik, parametry_labiryntu);
-		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-	}
-	else if(ile_przejsc(znacznik, parametry_labiryntu) == 1 && okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) != 'P') 
+	int ilosc_przejsc=ile_przejsc(znacznik, parametry_labiryntu);
+	
+	if(ilosc_przejsc == 1 ) 
 	{
 		zalepianie(znacznik, parametry_labiryntu);
-		skrzyzowanie(znacznik, parametry_labiryntu);
+		
 		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
 	}
 	else
@@ -103,14 +100,13 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 		}
 	}
 	switch(znak){
+		case 'P':
+			break;
 		case 'X':
 			fprintf(stdout, "BLAD: Brak mozliwosci poruszenia sie znacznika!\n");
 			break;
 		case ' ':
-		case 'L':
-		case 'R':
-		case 'U':
-		case 'D':
+	
 			ruch_do_przodu(znacznik);
 			break;
 		case 'K': //TEN CASE OZNACZA ZE MOZE NIE BYC WCALE POTRZEBNE ZAPISYWANIE ZMIENNEJ "punkt_koncowy" znajdujacej sie w analiza_labiryntu.c ROZWAZ TO!!!
@@ -128,11 +124,15 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	FILE* maze = fopen("tmp/temp.txt", "r+");
-	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
+	
 	char znak2;
-	while(znak != 'L' && znak != 'R' && znak != 'U' && znak != 'D')
+	printf("Proba zalepiania\n");
+
+	while(ile_przejsc(znacznik,parametry_labiryntu)<=2)
 	{
+		printf("weszlo w zalepianie\n");
 		znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+		
 		while(znak2 == 'X' || znak2 == 'P')
 		{
 			zmiana_kierunku_znacznika('l', znacznik);
@@ -140,166 +140,29 @@ void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* pa
 		}
 		fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
 		fputc('X', maze);
+		printf("Zalepiono: x=%d, y=%d\n", znacznik->x, znacznik->y);
 		ruch_do_przodu(znacznik);
-		znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
+		
 	}
+	
 	fclose(maze);
 }
-void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
-{
-	FILE* maze = fopen("tmp/temp.txt", "r+");
-	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
-	char znak2;
-	switch(znak){
-		case ' ':
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			while(znak2 == 'X' || znak2 == 'P')
-			{
-				zmiana_kierunku_znacznika('l', znacznik);
-				znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			}
-			fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-			switch(znacznik->kierunek)
-			{
-				case 'l':
-					fputc('L', maze);
-					break;
-				case 'p':
-					fputc('R', maze);
-					break;
-				case 'g':
-					fputc('U', maze);
-					break;
-				case 'd':
-					fputc('D', maze);
-					break;
-				default:
-					exit(1);
-			}
-			break;
-		case 'U':
-			znacznik->kierunek='l';
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			while(znak2 == 'X' || znak2 == 'P')
-			{
-				zmiana_kierunku_znacznika('l', znacznik);
-				znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			}
-			fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-			switch(znacznik->kierunek)
-			{
-				case 'l':
-					fputc('L', maze);
-					break;
-				case 'p':
-					fputc('R', maze);
-					break;
-				case 'g':
-					fputc('U', maze);
-					break;
-				case 'd':
-					fputc('D', maze);
-					break;
-				default:
-					exit(1);
-			}
-			break;
-		case 'D':
-			znacznik->kierunek='p';
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			while(znak2 == 'X' || znak2 == 'P')
-			{
-				zmiana_kierunku_znacznika('l', znacznik);
-				znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			}
-			fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-			switch(znacznik->kierunek)
-			{
-				case 'l':
-					fputc('L', maze);
-					break;
-				case 'p':
-					fputc('R', maze);
-					break;
-				case 'g':
-					fputc('U', maze);
-					break;
-				case 'd':
-					fputc('D', maze);
-					break;
-				default:
-					exit(1);
-			}
-			break;
-		case 'L':
-			znacznik->kierunek='d';
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			while(znak2 == 'X' || znak2 == 'P')
-			{
-				zmiana_kierunku_znacznika('l', znacznik);
-				znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			}
-			fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-			switch(znacznik->kierunek)
-			{
-				case 'l':
-					fputc('L', maze);
-					break;
-				case 'p':
-					fputc('R', maze);
-					break;
-				case 'g':
-					fputc('U', maze);
-					break;
-				case 'd':
-					fputc('D', maze);
-					break;
-				default:
-					exit(1);
-			}
-			break;
-		case 'R':
-			znacznik->kierunek='g';
-			znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			while(znak2 == 'X' || znak2 == 'P')
-			{
-				zmiana_kierunku_znacznika('l', znacznik);
-				znak2 = okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-			}
-			fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
-			switch(znacznik->kierunek)
-			{
-				case 'l':
-					fputc('L', maze);
-					break;
-				case 'p':
-					fputc('R', maze);
-					break;
-				case 'g':
-					fputc('U', maze);
-					break;
-				case 'd':
-					fputc('D', maze);
-					break;
-				default:
-					exit(1);
-			}
-			break;
-		default:
-			fprintf(stdout, "BLAD: Nieznany element labiryntu \'%c\'\n", znak);
 
-	}
-	fclose(maze);
-}
 int ile_przejsc(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	int j = 0;
+	char znak=okreslenie_bloku_przed_znacznikiem(znacznik,parametry_labiryntu);
 	for(int i = 0; i<4; i++)
 	{
-		if(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == ' ' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'P' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'K' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'U' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'D' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'L' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'R' )
+		printf("Pozycja znacznik: x=%d, y=%d, kierunek=%c, j=%d\n", znacznik->x, znacznik->y, znacznik->kierunek,j);
+		if(okreslenie_bloku_przed_znacznikiem(znacznik,parametry_labiryntu)!='X' ){
+			printf("Znak przed znacznikiem to: %c, zatem dodaje j!\n", znak);
 			j++;
+		}
 		zmiana_kierunku_znacznika('l', znacznik);
+		//znak=okreslenie_bloku_przed_znacznikiem(znacznik,parametry_labiryntu);
 	}
+	printf("j na koniec %d\n", j);
 	return j;
 }
 	
