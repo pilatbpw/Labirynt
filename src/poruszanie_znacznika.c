@@ -104,7 +104,7 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 	}
 	switch(znak){
 		case 'X':
-			fprintf(stdout, "BLAD: Brak mozliwosci poruszenia sie znacznika!\n");
+			//fprintf(stdout, "BLAD: Brak mozliwosci poruszenia sie znacznika!\n");
 			break;
 		case ' ':
 		case 'L':
@@ -297,9 +297,11 @@ void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* 
 int ile_przejsc(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	int j = 0;
+	char znak;
 	for(int i = 0; i<4; i++)
 	{
-		if(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == ' ' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'P' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'K' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'U' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'D' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'L' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'R' )
+		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+		if(znak!= 'X' )
 			j++;
 		zmiana_kierunku_znacznika('l', znacznik);
 	}
