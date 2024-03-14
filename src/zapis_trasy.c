@@ -142,14 +142,14 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 	FILE* plik_wynikowy = fopen(Sciezka_pliku_wynikowego, "r+");
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
-	char znak2;
+	
 	
 	while(znak != 'K')
 	{
-		znak2=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		while(znak2=='X' || znak2=='P' || znak2=='*'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
+		
+		while(znak=='X' || znak=='P' || znak=='*'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
 			zmiana_kierunku_znacznika('l', znacznik);
-			znak2=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+			znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
 			//JESLI OBROCI SIE 3 RAZY TO ZNACZNY ZE JEST SLEPY ZAULEK!!! (notatka co do pozniejszego zaklejania slepych zaulkow)
 		}
 		ruch_do_przodu(znacznik);
@@ -163,25 +163,7 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 		
 		fputc('*', plik_wynikowy);
 		fputc('*', maze);
-		switch(znak)
-		{
-			case ' ':
-				break;
-			case 'U':
-				znacznik->kierunek = 'g';
-				break;
-			case 'D':
-				znacznik->kierunek = 'd';
-				break;
-			case 'L':
-				znacznik->kierunek = 'l';
-				break;
-			case 'R':
-				znacznik->kierunek = 'p';
-				break;
-			default:
-				exit(1);			
-		}
+		
 	}
 	fclose(maze);
 	fclose(plik_wynikowy);

@@ -75,26 +75,23 @@ void ruch_do_przodu(struct Znacznik_typ* znacznik){
 }
 
 int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu){
-	char znak;
-	if(ile_przejsc(znacznik, parametry_labiryntu) > 2 || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'U' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'D' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'L' || okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) == 'R') 
-	{	
-		skrzyzowanie(znacznik, parametry_labiryntu);
-		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-	}
-	else if(ile_przejsc(znacznik, parametry_labiryntu) == 1 && okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) != 'P') 
+	
+	char znak_przed_znacznikiem=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+	
+	if(ile_przejsc(znacznik, parametry_labiryntu) == 1 && znak_przed_znacznikiem != 'P'&& znak_przed_znacznikiem!='K') 
 	{
 		zalepianie(znacznik, parametry_labiryntu);
-		skrzyzowanie(znacznik, parametry_labiryntu);
-		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+		//skrzyzowanie(znacznik, parametry_labiryntu);
+		
 	}
 	else
 	{
 		char zmienna_do_skasowania_potem=znacznik->kierunek; //TYLKO DLA KOMENTARZA W FINALNYM NALEZY TO SKASOWAC!!!
 		zmiana_kierunku_znacznika('p', znacznik);
-		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		while(znak=='X' || znak=='P'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
+		znak_przed_znacznikiem=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+		while(znak_przed_znacznikiem=='X' || znak_przed_znacznikiem=='P'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
 			zmiana_kierunku_znacznika('l', znacznik);
-			znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
+			znak_przed_znacznikiem=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
 			//JESLI OBROCI SIE 3 RAZY TO ZNACZNY ZE JEST SLEPY ZAULEK!!! (notatka co do pozniejszego zaklejania slepych zaulkow)
 		}
 			//Ten fragment to tylko w ramach komentarza, zeby wiadomo bylo co sie dzieje ze znacznikiem:
@@ -102,15 +99,15 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 			//fprintf(stdout, "Zmiana kierunku! (\'%c\' -> \'%c\')\n", zmienna_do_skasowania_potem, znacznik->kierunek);
 		}
 	}
-	switch(znak){
+	switch(znak_przed_znacznikiem){
 		case 'X':
-			//fprintf(stdout, "BLAD: Brak mozliwosci poruszenia sie znacznika!\n");
+			fprintf(stdout, "BLAD: Brak mozliwosci poruszenia sie znacznika!\n");
 			break;
 		case ' ':
-		case 'L':
-		case 'R':
-		case 'U':
-		case 'D':     
+		//case 'L':
+		//case 'R':
+		//case 'U':
+		//case 'D':     
 			ruch_do_przodu(znacznik);
 			break;
 		case 'K': //TEN CASE OZNACZA ZE MOZE NIE BYC WCALE POTRZEBNE ZAPISYWANIE ZMIENNEJ "punkt_koncowy" znajdujacej sie w analiza_labiryntu.c ROZWAZ TO!!!
@@ -119,7 +116,7 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 			return 0; //0 oznacza ze doszedl do konca
 			break;
 		default:
-			fprintf(stdout, "BLAD: Nieznany element labiryntu: \'%c\'\n", znak);
+			fprintf(stdout, "BLAD: Nieznany element labiryntu: \'%c\'\n", znak_przed_znacznikiem);
 			exit(1);
 	}
 
@@ -141,12 +138,13 @@ void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* pa
         }
         fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
         fputc('X', maze);
+		printf("Zalepiono: x=%d, y=%d\n", znacznik->x, znacznik->y);
         ruch_do_przodu(znacznik);
         
     }
     fclose(maze);
 }
-void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
+/*void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	FILE* maze = fopen("tmp/temp.txt", "r+");
 	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
@@ -294,6 +292,9 @@ void skrzyzowanie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* 
 	}
 	fclose(maze);
 }
+*/
+
+
 int ile_przejsc(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu)
 {
 	int j = 0;
