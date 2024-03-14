@@ -1,7 +1,7 @@
 #include "zapis_trasy.h"
 
-void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
-	wyznaczenie_trasy(znacznik, punkt_startowy, parametry_labiryntu);
+void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu, char* Sciezka_pliku_wynikowego){
+	wyznaczenie_trasy(znacznik, punkt_startowy, parametry_labiryntu, Sciezka_pliku_wynikowego);
 	FILE* plik=fopen("wyniki/zapis_przejsc.txt", "w");
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	/*
@@ -54,7 +54,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 	while(okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu) != 'K')
 	{
 		j=0;
-		while(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'O' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'K')
+		while(okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == '*' || okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu) == 'K')
 		{
 			j++;
 			ruch_do_przodu(znacznik);
@@ -103,7 +103,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 		}
 		zmiana_kierunku_znacznika('p', znacznik);
 		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		while(znak!='O' && znak!='K')
+		while(znak!='*' && znak!='K')
 		{
 			zmiana_kierunku_znacznika('l', znacznik);
 			znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
@@ -136,10 +136,10 @@ int ostateczna_trasa(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_ty
 	printf("3"); // CO TO TU ROBI?
 	return 0;
 }
-void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu)
+void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu, char * Sciezka_pliku_wynikowego)
 {
 	FILE* maze = fopen("tmp/temp.txt", "r+");
-	FILE* plik_wynikowy = fopen("wyniki/sciezka_rozwiazujaca_labirynt.txt", "r+");
+	FILE* plik_wynikowy = fopen(Sciezka_pliku_wynikowego, "r+");
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	char znak = okreslenie_aktualnego_bloku(znacznik, parametry_labiryntu);
 	char znak2;
@@ -147,7 +147,7 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 	while(znak != 'K')
 	{
 		znak2=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
-		while(znak2=='X' || znak2=='P' || znak2=='O'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
+		while(znak2=='X' || znak2=='P' || znak2=='*'){ //znak =='P' rozpatrywany jest po to, aby jesli znacznik zawroci na sam poczatek, nie wyszedl poza plansze
 			zmiana_kierunku_znacznika('l', znacznik);
 			znak2=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu);
 			//JESLI OBROCI SIE 3 RAZY TO ZNACZNY ZE JEST SLEPY ZAULEK!!! (notatka co do pozniejszego zaklejania slepych zaulkow)
@@ -161,8 +161,8 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 		fseek(maze, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
 		fseek(plik_wynikowy, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
 		
-		fputc('O', plik_wynikowy);
-		fputc('O', maze);
+		fputc('*', plik_wynikowy);
+		fputc('*', maze);
 		switch(znak)
 		{
 			case ' ':

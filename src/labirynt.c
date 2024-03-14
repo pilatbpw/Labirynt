@@ -3,6 +3,10 @@
 #include "odczyt_labiryntu.h"
 #include "poruszanie_znacznika.h"
 #include "zapis_trasy.h"
+
+#define SCIEZKA_PLIKU_WYNIKOWEGO "wyniki/sciezka_rozwiazujaca_labirynt.txt"
+
+
 void charakterystyka_poczatkowa_znacznika(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_startowy, struct ParametryLabiryntu_typ* parametry_labiryntu){
 	znacznik->x=punkt_startowy->x;
 	znacznik->y=punkt_startowy->y;
@@ -46,7 +50,7 @@ int main(int argc, char* argv[]){
 	
 	
 	utworzenie_pliku_pomocniczego(wczytany_labirynt, "tmp/temp.txt");
-	utworzenie_pliku_pomocniczego(wczytany_labirynt, "wyniki/sciezka_rozwiazujaca_labirynt.txt");
+	utworzenie_pliku_pomocniczego(wczytany_labirynt, SCIEZKA_PLIKU_WYNIKOWEGO);
 	free(sciezka_do_pliku);
 	fclose(wczytany_labirynt);
 	
@@ -62,17 +66,18 @@ int main(int argc, char* argv[]){
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	
 	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
-	
-	fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
+	//
+	//fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
 	
 	while(poruszanie_po_labiryncie(znacznik, parametry_labiryntu)){
-		fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
+		//fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
 		
-		fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
-		fprintf(stdout, "\n");
+		//fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
+		//fprintf(stdout, "\n");
 		
 	}
-	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu);
+	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu, SCIEZKA_PLIKU_WYNIKOWEGO);
+	
 	return 0;
 	
 }

@@ -99,7 +99,7 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 		}
 			//Ten fragment to tylko w ramach komentarza, zeby wiadomo bylo co sie dzieje ze znacznikiem:
 		if(zmienna_do_skasowania_potem!=znacznik->kierunek){
-			fprintf(stdout, "Zmiana kierunku! (\'%c\' -> \'%c\')\n", zmienna_do_skasowania_potem, znacznik->kierunek);
+			//fprintf(stdout, "Zmiana kierunku! (\'%c\' -> \'%c\')\n", zmienna_do_skasowania_potem, znacznik->kierunek);
 		}
 	}
 	switch(znak){

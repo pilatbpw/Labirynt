@@ -3,4 +3,7 @@ all:
 	@mkdir -p tmp;
 	@if [ "$$(ls -A tmp)" ]; then \
         rm -rf tmp/*; \
-    fi
+	fi 
+	@if [ "$$(ls -A wyniki)" ]; then \
+	rm -rf wyniki/*; \
+    	fi
