@@ -1,3 +1,4 @@
+
 #include "analiza_labiryntu.h"
 
 

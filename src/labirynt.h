@@ -1,3 +1,4 @@
+
 #ifndef LABIRYNT_
 #define LABIRYNT_
 #include <stdio.h>

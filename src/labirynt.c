@@ -1,3 +1,4 @@
+
 #include "labirynt.h"
 #include "analiza_labiryntu.h"
 #include "odczyt_labiryntu.h"
@@ -51,6 +52,8 @@ int main(int argc, char* argv[]){
 	
 	utworzenie_pliku_pomocniczego(wczytany_labirynt, "tmp/temp.txt");
 	utworzenie_pliku_pomocniczego(wczytany_labirynt, SCIEZKA_PLIKU_WYNIKOWEGO);
+	FILE* tmp = fopen("tmp/temp.txt", "r+");
+	FILE* plik_wynikowy = fopen(SCIEZKA_PLIKU_WYNIKOWEGO, "r+");
 	free(sciezka_do_pliku);
 	fclose(wczytany_labirynt);
 	
@@ -66,19 +69,21 @@ int main(int argc, char* argv[]){
 	charakterystyka_poczatkowa_znacznika(znacznik, punkt_startowy, parametry_labiryntu);
 	
 	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
-
-	fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
 	
-	while(poruszanie_po_labiryncie(znacznik, parametry_labiryntu)){
-		fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu));
+	//fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu, tmp));
+	
+	while(poruszanie_po_labiryncie(znacznik, parametry_labiryntu, tmp)){
+		//fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu, tmp));
 		
-		fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
-		fprintf(stdout, "\n");
+		//fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
+		
 		
 	}
-	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu, SCIEZKA_PLIKU_WYNIKOWEGO);
+	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu, tmp, plik_wynikowy);
+	fprintf(stdout, "Udalo sie utworzyc zapis przejsc\n");
+	fclose(tmp);
+	fclose(plik_wynikowy);
 	
 	return 0;
 	
 }
-

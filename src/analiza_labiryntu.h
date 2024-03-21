@@ -1,3 +1,4 @@
+
 #ifndef OKRESLENIE_POLOZENIA
 #define OKRESLENIE_POLOZENIA
 #include <stdio.h>
