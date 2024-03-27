@@ -6,6 +6,7 @@
 #include "zapis_trasy.h"
 #include "obsluga_argumentow.h"
 #include "znalezienie_dowolnego_przejscia.h"
+#include "odczyt_pliku_binarnego.h"
 #define SCIEZKA_PLIKU_WYNIKOWEGO "wyniki/sciezka_rozwiazujaca_labirynt.txt"
 
 
@@ -37,16 +38,31 @@ int main(int argc, char* argv[]){
 	char tryb=obsluga_argumentow(argc,argv, nazwa);
 	sprintf(sciezka_do_pliku, "./dane/%s", nazwa);
 	free(nazwa);
-	FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"r");
-	if(wczytany_labirynt==NULL){
-		fprintf(stdout,"BLAD: Blad wczytanego pliku\n");
-		exit(1);
-	}else{
-		fprintf(stdout, "Wczytano poprawnie plik!\n");
-	}
+	
+
+	
 	if(tryb=='d'){
+		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"r");
+		if(wczytany_labirynt==NULL){
+			fprintf(stdout,"BLAD: Blad wczytanego pliku\n");
+			exit(1);
+		}else{
+			fprintf(stdout, "Wczytano poprawnie plik!\n");
+		}
+		free(sciezka_do_pliku);
 		return znalezienie_dowolnego_przejscia(wczytany_labirynt);
 	}
-	free(sciezka_do_pliku);
+	else if(tryb=='k'){
+		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"rb");
+		if(wczytany_labirynt==NULL){
+			fprintf(stdout,"BLAD: Blad wczytanego pliku binarnego\n");
+			exit(1);
+		}else{
+			fprintf(stdout, "Wczytano poprawnie plik binarny!\n");
+		}
+		free(sciezka_do_pliku);
+		odczyt_pliku_binarnego(wczytany_labirynt);
+	} 
 	
+	return 0;
 }
