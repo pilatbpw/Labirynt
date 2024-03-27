@@ -113,7 +113,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 		}
 		if(znak=='K' || znak=='\n')
 		{
-			//printf("K!!!!\n");
+			printf("K!!!!\n");
 			break;
 		}
 		zmiana_kierunku_znacznika('p', znacznik);
@@ -126,6 +126,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 		znak=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu, plik_tmp);
 		
 		//printf("Pelne while");
+		//printf("Pozycja znacznika: x:%d, y:%d\n", znacznik->x, znacznik->y);
 	}
 }
 int ostateczna_trasa(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu, FILE *plik_tmp)

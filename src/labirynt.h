@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include "analiza_labiryntu.h"
 
-
-
-
 struct Znacznik_typ{
 	int x;
 	int y;

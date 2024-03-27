@@ -29,7 +29,7 @@ void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *
 }
 
 void okreslenie_poczatek_koniec_labiryntu(struct Punkt_typ* punkt_startowy, struct Punkt_typ* punkt_koncowy){
-	FILE* plik=fopen("tmp/temp.txt", "r");
+	FILE* plik=fopen("tmp/temp", "r");
 	
 	char sprawdzany_znak=fgetc(plik);
 	int aktualny_x=0;
