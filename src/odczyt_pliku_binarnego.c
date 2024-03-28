@@ -37,34 +37,55 @@ void odczyt_pliku_binarnego(FILE* plik){
     unsigned char liczba_znakow;
     int pozostale_znaki_w_linii=kolumny;
 	int liczba_znakow_int;
-    for(int i=licznik_slow_kodowych;i>0;i--){
-        //pozostale_znaki_w_linii=kolumny;
-            //while(pozostale_znaki_w_linii>1){
+    for(int i=licznik_slow_kodowych;i>0;i--){ // przetlumaczenie labiryntu z pliku binarnego do pliku tekstowego
+       
                 fseek(plik,1,SEEK_CUR);
                 fread(&znak,1,1,plik);
                 fread(&liczba_znakow,1,1,plik);
 				liczba_znakow_int=(int)(liczba_znakow)+1;
-                //fprintf(stdout, "Znak:%c, Liczba:%d\n", znak,liczba_znakow_int);
+                
                 for(int k=0;k<liczba_znakow_int;k++){
-                  fprintf(przetlumaczony_plik_binarny,"%c", znak);
-				  pozostale_znaki_w_linii--;
-				  if(pozostale_znaki_w_linii<1){
-					  fprintf(przetlumaczony_plik_binarny,"\n");
-					  pozostale_znaki_w_linii=kolumny;
-				  }
+					fprintf(przetlumaczony_plik_binarny,"%c", znak);
+					pozostale_znaki_w_linii--;
+					if(pozostale_znaki_w_linii<1){
+						fprintf(przetlumaczony_plik_binarny,"\n");
+						pozostale_znaki_w_linii=kolumny;
+					}
 				  
-               }
-			   //printf("Pozostalem znaki przed zmniejszeniem:%d\n", pozostale_znaki_w_linii);
-               //pozostale_znaki_w_linii-=liczba_znakow_int;
-			  // printf("Pozostalem znaki po zmniejszeniu:%d\n", pozostale_znaki_w_linii);
-
-            //}
-            //fprintf(przetlumaczony_plik_binarny,"\n");
+				}
+			  
             
             
 
         }
         fprintf(stdout,"\n");
+		if(solution_offset!=0){
+			FILE * Rozwiazanie_z_pliku_binarnego=fopen("tmp/Rozwiazanie_z_pliku_binarnego", "w");
+			unsigned int Solution_Id;
+			unsigned char Steps;
+			fread(&Solution_Id,4,1,plik);
+			fread(&Steps, 1,1,plik);
+			char kierunek;
+			unsigned char liczba_pol_do_przejscia;
+			int liczba_pol_do_przejscia_int;
+			for(int i=Steps;i>0;i--){ // przetlumaczenie rozwiazania labiryntu z pliku binarnego do pliku tekstowego
+       
+                
+                fread(&kierunek,1,1,plik);
+                fread(&liczba_pol_do_przejscia,1,1,plik);
+				liczba_pol_do_przejscia_int=(int)(liczba_pol_do_przejscia)+1;
+                
+                fprintf(Rozwiazanie_z_pliku_binarnego,"%c - %d\n", kierunek, liczba_pol_do_przejscia_int);
+			  
+            
+            
+
+        }
+			
+		}
+		else
+			fprintf(stdout, "Rozwiazanie nie zostalo zawarte w pliku binarnym\n");
+		
         fclose(przetlumaczony_plik_binarny);
     }
     
