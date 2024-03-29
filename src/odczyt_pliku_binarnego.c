@@ -58,6 +58,7 @@ void odczyt_pliku_binarnego(FILE* plik){
             
 
         }
+		
         fprintf(stdout,"\n");
 		if(solution_offset!=0){
 			FILE * Rozwiazanie_z_pliku_binarnego=fopen("tmp/Rozwiazanie_z_pliku_binarnego", "w");
@@ -86,6 +87,10 @@ void odczyt_pliku_binarnego(FILE* plik){
 		else
 			fprintf(stdout, "Rozwiazanie nie zostalo zawarte w pliku binarnym\n");
 		
+		fseek(przetlumaczony_plik_binarny, (X_start-1)+((Y_start-1)*(kolumny+1)),SEEK_SET);
+		fprintf(przetlumaczony_plik_binarny,"P");
+		fseek(przetlumaczony_plik_binarny, (X_koniec-1)+((Y_koniec-1)*(kolumny+1)),SEEK_SET);
+		fprintf(przetlumaczony_plik_binarny,"K");
         fclose(przetlumaczony_plik_binarny);
     }
     
