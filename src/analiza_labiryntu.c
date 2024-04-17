@@ -10,6 +10,10 @@ void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *
 		fprintf(stdout, "BLAD: Wczytany plik jest pusty\n");
 		exit(1);
 	}
+	if(sprawdzany_znak=='\n')
+	{
+		fprintf(stdout, "ALE JAJA!");
+	}
 	while(sprawdzany_znak!='\n' && sprawdzany_znak!=EOF){
 		licznik_c++;
 		sprawdzany_znak=fgetc(plik);

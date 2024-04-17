@@ -2,7 +2,7 @@
 #include "znalezienie_dowolnego_przejscia.h"
 
 void odczyt_pliku_binarnego(FILE* plik){
-    FILE* przetlumaczony_plik_binarny=fopen("tmp/przetlumaczony_plik_binarny","w+");
+    FILE* przetlumaczony_plik_binarny=fopen("tmp/przetlumaczony_plik_binarny","w");
     unsigned int file_id;
     unsigned char escape;
     short int kolumny;
@@ -60,6 +60,7 @@ void odczyt_pliku_binarnego(FILE* plik){
 	fprintf(przetlumaczony_plik_binarny,"P");
 	fseek(przetlumaczony_plik_binarny, (X_koniec-1)+((Y_koniec-1)*(kolumny+1)),SEEK_SET);
 	fprintf(przetlumaczony_plik_binarny,"K");
+    fclose(przetlumaczony_plik_binarny);
 		
     fprintf(stdout,"\n");
     if(solution_offset!=0){
@@ -84,8 +85,9 @@ void odczyt_pliku_binarnego(FILE* plik){
         }
     }
     else {
+        FILE* maze=fopen("tmp/przetlumaczony_plik_binarny","r+");
         fprintf(stdout, "Rozwiazanie nie zostalo zawarte w pliku binarnym\n");
-        znalezienie_dowolnego_przejscia(przetlumaczony_plik_binarny);
+        znalezienie_dowolnego_przejscia(maze);
 
         fseek(plik, 33,SEEK_SET);
         fputc('1', plik);
@@ -124,6 +126,5 @@ void odczyt_pliku_binarnego(FILE* plik){
         fputc(steps, plik);
         fclose(trasa);
     }
-    fclose(przetlumaczony_plik_binarny);
 }
     
