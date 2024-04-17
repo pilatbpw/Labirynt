@@ -25,9 +25,6 @@ void charakterystyka_poczatkowa_znacznika(struct Znacznik_typ* znacznik, struct 
 	} else{
 		fprintf(stdout, "BLAD: Labirynt blednie skonstruowany (poczatek labiryntu znajduje sie w niepoprawnym miejscu)\n");
 	}
-		
-	
-	
 }
 
 int main(int argc, char* argv[]){
@@ -53,7 +50,7 @@ int main(int argc, char* argv[]){
 		return znalezienie_dowolnego_przejscia(wczytany_labirynt);
 	}
 	else if(tryb=='k'){
-		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"rb");
+		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"rb+");
 		if(wczytany_labirynt==NULL){
 			fprintf(stdout,"BLAD: Blad wczytanego pliku binarnego\n");
 			exit(1);

@@ -3,11 +3,9 @@
 
 
 void okreslenie_parametrow_labiryntu(FILE *plik, struct ParametryLabiryntu_typ *parametry_labiryntu){
-	
 	int licznik_c=0;
 	int licznik_r=1;
 	char sprawdzany_znak=fgetc(plik);
-	
 	if (sprawdzany_znak==EOF){
 		fprintf(stdout, "BLAD: Wczytany plik jest pusty\n");
 		exit(1);

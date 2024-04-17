@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void odczyt_pliku_binarnego(FILE* plik);
 
