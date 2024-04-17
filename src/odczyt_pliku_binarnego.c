@@ -67,16 +67,21 @@ void odczyt_pliku_binarnego(FILE* plik){
         fprintf(stdout, "Rozwiazanie zostalo zawarte w pliku binarnym\n");
         FILE * Rozwiazanie_z_pliku_binarnego=fopen("tmp/Rozwiazanie_z_pliku_binarnego", "w");
         unsigned int Solution_Id;
-        unsigned char Steps;
+        short int Steps;
+        fseek(plik, 43, SEEK_SET);
         fread(&Solution_Id,4,1,plik);
+        fprintf(stdout, "Sol_ID: %i\n", Solution_Id);
+        fseek(plik, 47, SEEK_SET);
         fread(&Steps, 1,1,plik);
+        fprintf(stdout, "Steps: %i\n", Steps);
         char kierunek;
         unsigned char liczba_pol_do_przejscia;
         int liczba_pol_do_przejscia_int;
+        fseek(plik, 48, SEEK_SET);
         for(int i=Steps;i>0;i--){ // przetlumaczenie rozwiazania labiryntu z pliku binarnego do pliku tekstowego
     
             
-            fread(&kierunek,1,1,plik);
+            fread(&kierunek,1, 1,plik);
             fread(&liczba_pol_do_przejscia,1,1,plik);
             liczba_pol_do_przejscia_int=(int)(liczba_pol_do_przejscia)+1;
             
@@ -88,43 +93,54 @@ void odczyt_pliku_binarnego(FILE* plik){
         FILE* maze=fopen("tmp/przetlumaczony_plik_binarny","r+");
         fprintf(stdout, "Rozwiazanie nie zostalo zawarte w pliku binarnym\n");
         znalezienie_dowolnego_przejscia(maze);
-
-        fseek(plik, 33,SEEK_SET);
-        fputc('1', plik);
-        fseek(plik, 48, SEEK_SET);
-
-        FILE * trasa = fopen("wynik/zapis_przejsc.txt", "r");
+        fclose(maze);
+        /*
+        FILE * trasa = fopen("wyniki/zapis_przejsc.txt", "r");
         char linia[200];
         char direction[sizeof(char) *12];
         int steps=-1;
         int counter;
-
         while(fgets(linia, 200, trasa))
         {
             sscanf(linia, "%i - %s", &counter, direction);
             if(strcmp(direction, "RUCH_W_LEWO") == 0)
             {
-                fputc('W', plik);
+                fputc((unsigned int)'W', plik);
             }
             if(strcmp(direction, "RUCH_W_PRAWO") == 0)
             {
-                fputc('E', plik);    
+                fputc((unsigned int)'E', plik);  
             }
             if(strcmp(direction, "RUCH_W_GORE") == 0)
             {
-                fputc('N', plik);
+                fputc((unsigned int)'N', plik);
             }
             if(strcmp(direction, "RUCH_W_DOL") == 0)
             {
-                fputc('S', plik);
+                fputc((unsigned int)'S', plik);
             }
+            fseek(plik, 1, SEEK_CUR);
             fputc(counter, plik);
             steps++;
             fseek(plik, 1, SEEK_CUR);
         }
-        fseek(plik, 47, SEEK_SET);
-        fputc(steps, plik);
+        fprintf(stdout, "3");
+        if(steps > 0)
+        {
+            fseek(plik, 33,SEEK_SET);
+            fwrite("1", 4, 1, plik);
+            fseek(plik, 48, SEEK_SET);
+
+            fseek(plik, 47, SEEK_SET);
+            fprintf(stdout, "steps: %i", steps);
+            //fputc(steps, plik);
+            fwrite(&steps, 1, 1, plik);
+            fseek(plik, 43, SEEK_SET);
+            //fputc(1, plik);
+            fwrite("1", 4, 1, plik);
+        }
         fclose(trasa);
+        */
     }
 }
     

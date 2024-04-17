@@ -43,7 +43,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 		}
 		if(znak=='K')
 			break;
-		fprintf(stdout, "x: %d y: %d \n", znacznik->x, znacznik->y);
+		//fprintf(stdout, "x: %d y: %d \n", znacznik->x, znacznik->y);
 	}
 }
 int ostateczna_trasa(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu, FILE *plik_tmp)
@@ -105,5 +105,4 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 	fputc('*', plik_tmp);
 	fseek(plik_wynikowy, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
 	fputc('*', plik_wynikowy);
-	printf("Koniec!");
 }

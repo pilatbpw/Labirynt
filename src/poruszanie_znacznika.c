@@ -78,7 +78,6 @@ void ruch_do_przodu(struct Znacznik_typ* znacznik){
 
 int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu, FILE* plik){
 	
-	//fprintf(stdout, "ŻYJĘ!");
 	char znak_przed_znacznikiem=okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu, plik);
 	
 	if(ile_przejsc(znacznik, parametry_labiryntu,plik) == 1 && znak_przed_znacznikiem != 'P'&& znak_przed_znacznikiem!='K') 

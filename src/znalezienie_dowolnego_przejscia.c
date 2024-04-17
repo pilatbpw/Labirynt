@@ -38,10 +38,6 @@ struct ParametryLabiryntu_typ *parametry_labiryntu;
 	fprintf(stdout, "Charakterystyka znacznika na poczatku:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
 
 	while(poruszanie_po_labiryncie(znacznik, parametry_labiryntu, tmp)){
-		//fprintf(stdout, "Znak przed znacznikiem to: \"%c\"\n", okreslenie_bloku_przed_znacznikiem(znacznik, parametry_labiryntu, tmp));
-		
-		//fprintf(stdout, "Charakterystyka znacznika po poruszeniu:\nx=%d, y=%d, kierunek=%c\n", znacznik->x,znacznik->y, znacznik->kierunek);
-		
 		
 	}
 	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu, tmp, plik_wynikowy);

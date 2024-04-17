@@ -50,7 +50,7 @@ int main(int argc, char* argv[]){
 		return znalezienie_dowolnego_przejscia(wczytany_labirynt);
 	}
 	else if(tryb=='k'){
-		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"rb");
+		FILE* wczytany_labirynt=fopen(sciezka_do_pliku,"rb+");
 		if(wczytany_labirynt==NULL){
 			fprintf(stdout,"BLAD: Blad wczytanego pliku binarnego\n");
 			exit(1);
