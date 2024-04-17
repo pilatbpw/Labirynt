@@ -43,7 +43,7 @@ void zapis_przejscia_labiryntu(struct Znacznik_typ* znacznik, struct Punkt_typ* 
 		}
 		if(znak=='K')
 			break;
-		//fprintf(stdout, "x: %d y: %d \n", znacznik->x, znacznik->y);
+		
 	}
 }
 int ostateczna_trasa(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* parametry_labiryntu, FILE *plik_tmp)
@@ -98,7 +98,7 @@ void wyznaczenie_trasy(struct Znacznik_typ* znacznik, struct Punkt_typ* punkt_st
 			fputc('*', plik_wynikowy);
 			fputc('*', plik_tmp);
 		}
-		//printf("Gwiazdka postawiona w: x=%d, y=%d\n", znacznik->x,znacznik->y);
+		
 		
 	}
 	fseek(plik_tmp, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);

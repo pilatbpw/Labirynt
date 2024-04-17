@@ -72,7 +72,7 @@ void ruch_do_przodu(struct Znacznik_typ* znacznik){
 			break;
 		
 	}
-	//fprintf(stdout, "PORUSZYŁEM SIĘ HURRA!");
+	
 	
 }
 
@@ -102,7 +102,7 @@ int poruszanie_po_labiryncie(struct Znacznik_typ* znacznik, struct ParametryLabi
 			break;
 		case 'K': 
 			ruch_do_przodu(znacznik);
-			fprintf(stdout, "ZNACZNIK DOSZEDL DO KONCA!\n");
+			fprintf(stdout, "\n\nZnaleziono rozwiazanie labiryntu!\n");
 			return 0; //0 oznacza ze doszedl do konca
 			break;
 		default:
@@ -128,7 +128,7 @@ void zalepianie(struct Znacznik_typ* znacznik, struct ParametryLabiryntu_typ* pa
         }
         fseek(plik, (znacznik->x)+(parametry_labiryntu->c+1)*(znacznik->y), SEEK_SET);
         fputc('X', plik);
-		//printf("Zalepiono: x=%d, y=%d\n", znacznik->x, znacznik->y);
+		
         ruch_do_przodu(znacznik);
         
     }

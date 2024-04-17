@@ -41,7 +41,7 @@ struct ParametryLabiryntu_typ *parametry_labiryntu;
 		
 	}
 	zapis_przejscia_labiryntu(znacznik, punkt_startowy, parametry_labiryntu, tmp, plik_wynikowy);
-	fprintf(stdout, "Udalo sie utworzyc zapis przejsc\n");
+	fprintf(stdout, "Udalo sie utworzyc zapis przejsc!\n");
 	fclose(tmp);
 	fclose(plik_wynikowy);
 	

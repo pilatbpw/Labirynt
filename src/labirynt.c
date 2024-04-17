@@ -32,6 +32,7 @@ int main(int argc, char* argv[]){
 	
 	char* sciezka_do_pliku=malloc(100);
 	char* nazwa=malloc(50);
+	
 	char tryb=obsluga_argumentow(argc,argv, nazwa);
 	sprintf(sciezka_do_pliku, "./dane/%s", nazwa);
 	free(nazwa);

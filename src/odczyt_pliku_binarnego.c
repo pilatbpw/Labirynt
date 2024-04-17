@@ -94,53 +94,7 @@ void odczyt_pliku_binarnego(FILE* plik){
         fprintf(stdout, "Rozwiazanie nie zostalo zawarte w pliku binarnym\n");
         znalezienie_dowolnego_przejscia(maze);
         fclose(maze);
-        /*
-        FILE * trasa = fopen("wyniki/zapis_przejsc.txt", "r");
-        char linia[200];
-        char direction[sizeof(char) *12];
-        int steps=-1;
-        int counter;
-        while(fgets(linia, 200, trasa))
-        {
-            sscanf(linia, "%i - %s", &counter, direction);
-            if(strcmp(direction, "RUCH_W_LEWO") == 0)
-            {
-                fputc((unsigned int)'W', plik);
-            }
-            if(strcmp(direction, "RUCH_W_PRAWO") == 0)
-            {
-                fputc((unsigned int)'E', plik);  
-            }
-            if(strcmp(direction, "RUCH_W_GORE") == 0)
-            {
-                fputc((unsigned int)'N', plik);
-            }
-            if(strcmp(direction, "RUCH_W_DOL") == 0)
-            {
-                fputc((unsigned int)'S', plik);
-            }
-            fseek(plik, 1, SEEK_CUR);
-            fputc(counter, plik);
-            steps++;
-            fseek(plik, 1, SEEK_CUR);
-        }
-        fprintf(stdout, "3");
-        if(steps > 0)
-        {
-            fseek(plik, 33,SEEK_SET);
-            fwrite("1", 4, 1, plik);
-            fseek(plik, 48, SEEK_SET);
-
-            fseek(plik, 47, SEEK_SET);
-            fprintf(stdout, "steps: %i", steps);
-            //fputc(steps, plik);
-            fwrite(&steps, 1, 1, plik);
-            fseek(plik, 43, SEEK_SET);
-            //fputc(1, plik);
-            fwrite("1", 4, 1, plik);
-        }
-        fclose(trasa);
-        */
+       
     }
 }
     
