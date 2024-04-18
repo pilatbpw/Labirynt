@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "odczyt_labiryntu.h": "c",
+        "znalezienie_dowolnego_przejscia.h": "c",
+        "poruszanie_znacznika.h": "c",
+        "obsluga_argumentow.h": "c",
+        "stdlib.h": "c"
+    }
+}
