@@ -70,10 +70,8 @@ void odczyt_pliku_binarnego(FILE* plik){
         short int Steps;
         fseek(plik, 43, SEEK_SET);
         fread(&Solution_Id,4,1,plik);
-        fprintf(stdout, "Sol_ID: %i\n", Solution_Id);
         fseek(plik, 47, SEEK_SET);
         fread(&Steps, 1,1,plik);
-        fprintf(stdout, "Steps: %i\n", Steps);
         char kierunek;
         unsigned char liczba_pol_do_przejscia;
         int liczba_pol_do_przejscia_int;
