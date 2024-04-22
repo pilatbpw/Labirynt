@@ -47,7 +47,7 @@ int main(int argc, char* argv[]){
 		}else{
 			fprintf(stdout, "Wczytano poprawnie plik!\n");
 		}
-		free(sciezka_do_pliku);
+		
 		return znalezienie_dowolnego_przejscia(wczytany_labirynt);
 	}
 	else if(tryb=='k'){
@@ -58,9 +58,9 @@ int main(int argc, char* argv[]){
 		}else{
 			fprintf(stdout, "Wczytano poprawnie plik binarny!\n");
 		}
-		free(sciezka_do_pliku);
+	
 		odczyt_pliku_binarnego(wczytany_labirynt);
 	} 
-	
+	free(sciezka_do_pliku);
 	return 0;
 }

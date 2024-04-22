@@ -22,7 +22,7 @@ struct ParametryLabiryntu_typ *parametry_labiryntu;
 	FILE* plik_wynikowy = fopen(SCIEZKA_PLIKU_WYNIKOWEGO, "r+");
 	
 
-	fclose(wczytany_labirynt);
+	
 	
 	struct Punkt_typ* punkt_startowy=malloc(sizeof(struct Punkt_typ));
 	struct Punkt_typ* punkt_koncowy=malloc(sizeof(struct Punkt_typ));
